@@ -23,7 +23,7 @@ public class Repository
     public Product getProduct(int id)
     {
         try {
-            ps = con.prepareStatement("SELECT * FROM products WHERE id = ?");
+            ps = con.prepareStatement("SELECT p.*, c.name AS 'category_name' FROM products AS p INNER JOIN products_categories AS c ON p.category_id = c.id WHERE p.id = ?");
             ps.setInt(1, id);
             rs = ps.executeQuery();
             
@@ -33,6 +33,9 @@ public class Repository
                 p.setId(rs.getInt("id"));
                 p.setName(rs.getString("name"));
                 p.setDescription(rs.getString("description"));
+                p.setCategoryId(rs.getInt("category_id"));
+                p.setCategory(rs.getString("category_name"));
+                p.setPrice(rs.getBigDecimal("price"));
             }
             return p;
                 
@@ -48,7 +51,7 @@ public class Repository
         ArrayList<Product> products = new ArrayList();
         
         try {
-            ps = con.prepareStatement("SELECT * FROM products");
+            ps = con.prepareStatement("SELECT p.*, c.name AS 'category_name' FROM products AS p INNER JOIN products_categories AS c ON p.category_id = c.id");
             rs = ps.executeQuery();
             
             while(rs.next())
@@ -59,6 +62,7 @@ public class Repository
                 p.setName(rs.getString("name"));
                 p.setDescription(rs.getString("description"));
                 p.setCategoryId(rs.getInt("category_id"));
+                p.setCategory(rs.getString("category_name"));
                 p.setPrice(rs.getBigDecimal("price"));
                 
                 products.add(p);

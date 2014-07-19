@@ -11,7 +11,7 @@
         
         <ul>
             <c:forEach items="${products}" var="product">
-                <li><a href="/product?id=${product.id}">${product.name}</a> in ${product.categoryId}</li>
+                <li><a href="/product?id=${product.id}">${product.name}</a> in ${product.category}</li>
             </c:forEach>
         </ul>
     </body>

@@ -6,6 +6,7 @@
 
 package com.shop.servlets;
 
+import com.shop.util.Repository;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,7 +21,11 @@ public class ProductServlet extends HttpServlet
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
-        String id = request.getParameter("id");
-        System.out.println("PARARMASFTMGASM:" + id);
+        int id = Integer.parseInt(request.getParameter("id"));
+        
+        Repository repo = (Repository) getServletContext().getAttribute("repo");
+        
+        request.setAttribute("product", repo.getProduct(id));
+        request.getRequestDispatcher("/product.jsp").forward(request, response);
     }
 }

@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "ProductsServlet", urlPatterns = { "/products" })
+@WebServlet(name = "ProductsServlet", urlPatterns = { "/" })
 public class ProductsServlet extends HttpServlet
 {
     @Override
