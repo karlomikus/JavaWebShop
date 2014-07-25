@@ -1,17 +1,12 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="tpl" uri="/WEB-INF/tlds/shop_tld" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
+<tpl:head_tag title="stuff" />
         <h1>Products</h1>
         
         <ul>
             <c:forEach items="${products}" var="product">
-                <li><a href="/product?id=${product.id}">${product.name}</a> in ${product.category}</li>
+                <li><a href="${pageContext.request.contextPath}/product?id=${product.id}">${product.name}</a> in ${product.category}</li>
             </c:forEach>
         </ul>
     </body>
