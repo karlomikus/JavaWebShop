@@ -10,6 +10,7 @@ public class Product
     private int categoryId;
     private String category;
     private BigDecimal price;
+    private String manufacturer;
 
     public int getId()
     {
@@ -69,6 +70,16 @@ public class Product
     public void setCategory(String category)
     {
         this.category = category;
+    }
+
+    public String getManufacturer()
+    {
+        return manufacturer;
+    }
+
+    public void setManufacturer(String manufacturer)
+    {
+        this.manufacturer = manufacturer;
     }
     
 }

@@ -19,6 +19,7 @@ public class Repository
         this.openConnection();
     }
     
+    // Products
     public Product getProduct(int id)
     {
         try {
@@ -63,6 +64,7 @@ public class Repository
                 p.setCategoryId(rs.getInt("category_id"));
                 p.setCategory(rs.getString("category_name"));
                 p.setPrice(rs.getBigDecimal("price"));
+                p.setManufacturer(rs.getString("manufacturer"));
                 
                 products.add(p);
             }
