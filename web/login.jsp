@@ -5,14 +5,14 @@
 <tpl:navbar_tag />
 <div class="container">
 
-    <form role="form" action="${pageContext.request.contextPath}/login">
+    <form role="form" action="${pageContext.request.contextPath}/login" method="post">
       <div class="form-group">
         <label for="email">Email address</label>
-        <input type="email" class="form-control" id="email" placeholder="Enter email">
+        <input name="email" type="email" class="form-control" id="email" placeholder="Enter email">
       </div>
       <div class="form-group">
         <label for="pass">Password</label>
-        <input type="password" class="form-control" id="pass" placeholder="Password">
+        <input name="pwd" type="password" class="form-control" id="pass" placeholder="Password">
       </div>
       <button type="submit" class="btn btn-primary">Login</button>
     </form>

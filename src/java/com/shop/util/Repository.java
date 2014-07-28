@@ -1,6 +1,7 @@
 package com.shop.util;
 
 import com.shop.beans.Product;
+import com.shop.beans.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,6 +18,60 @@ public class Repository
     public Repository()
     {
         this.openConnection();
+    }
+    
+    // Users
+    public User loginUser(String email, String password)
+    {
+        User u = new User();
+        
+        try {
+            ps = con.prepareStatement("SELECT * FROM users WHERE email=? AND password=? LIMIT 1");
+            ps.setString(1, email);
+            ps.setString(2, password);
+            rs = ps.executeQuery();
+            
+            if(rs !=null && rs.next()) {
+                u.setId(rs.getInt("id"));
+                u.setEmail(rs.getString("email"));
+                u.setUsername(rs.getString("username"));
+                u.setGroup_id(rs.getInt("group_id"));
+            }
+        } catch(SQLException ex) {
+            System.out.println(ex.getLocalizedMessage());
+        }
+        
+        return u;
+    }
+    
+    public User getUser(int Id)
+    {
+        User u = new User();
+        
+        try {
+            ps = con.prepareStatement("SELECT * FROM users WHERE id=? LIMIT 1");
+            ps.setInt(1, Id);
+            rs = ps.executeQuery();
+        } catch(SQLException ex) {
+            System.out.println(ex.getLocalizedMessage());
+        }
+        
+        return u;
+    }
+    
+    public boolean isAdmin(int userID)
+    {
+        try {
+            ps = con.prepareStatement("SELECT group_id FROM users WHERE id=? LIMIT 1");
+            ps.setInt(1, userID);
+            rs = ps.executeQuery();
+            
+            return true;
+            
+        } catch(SQLException ex) {
+            System.out.println(ex.getLocalizedMessage());
+        }
+        return false;
     }
     
     // Products
