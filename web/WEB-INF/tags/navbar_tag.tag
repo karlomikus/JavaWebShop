@@ -1,3 +1,4 @@
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@tag description="put the tag description here" pageEncoding="UTF-8"%>
 
 <!-- Fixed navbar -->
@@ -14,8 +15,24 @@
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Browse</a></li>
-            <li><a href="${pageContext.request.contextPath}/login">Login</a></li>
+            <li class="active"><a href="${pageContext.request.contextPath}/browse">Browse</a></li>
+            <c:if test="${not empty user}">
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">${user.username}  <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Profile</a></li>
+                    <li><a href="#">Orders</a></li>
+                    <li><a href="#">Wishlist</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Administration</a></li>
+                    <li class="divider"></li>
+                    <li><a href="${pageContext.request.contextPath}/logout">Logout</a></li>
+                </ul>
+            </li>
+            </c:if>
+            <c:if test="${empty user}">
+                <li><a href="${pageContext.request.contextPath}/login">Login</a></li>
+            </c:if>
             <li><a href="${pageContext.request.contextPath}/about">About</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">

@@ -39,7 +39,7 @@ public class LoginServlet extends HttpServlet
         }
         
         if(errorMsg != null) {
-            
+            response.sendRedirect("/error");
         }
         else {
             Repository repo = (Repository) getServletContext().getAttribute("repo");
@@ -48,8 +48,17 @@ public class LoginServlet extends HttpServlet
             if(user != null) {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
-                response.sendRedirect("/home");
+                response.sendRedirect(request.getContextPath() + "/home");
+            }
+            else {
+                response.sendRedirect(request.getContextPath() + "/error");
             }
         }
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+    {
+        req.getRequestDispatcher("/login.jsp").forward(req, resp);
     }
 }
