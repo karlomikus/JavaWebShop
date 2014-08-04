@@ -1,7 +1,7 @@
 -- --------------------------------------------------------
 -- Host:                         127.0.0.1
 -- Server version:               5.6.12-log - MySQL Community Server (GPL)
--- Server OS:                    Win32
+-- Server OS:                    Win64
 -- HeidiSQL Version:             8.3.0.4694
 -- --------------------------------------------------------
 
@@ -10,20 +10,35 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
--- Dumping database structure for webshop
-CREATE DATABASE IF NOT EXISTS `webshop` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `webshop`;
-
-
 -- Dumping structure for table webshop.cart
 CREATE TABLE IF NOT EXISTS `cart` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
+  `product_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `quantity` smallint(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_cart_users` (`user_id`),
+  CONSTRAINT `FK_cart_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Dumping data for table webshop.cart: ~0 rows (approximately)
 /*!40000 ALTER TABLE `cart` DISABLE KEYS */;
 /*!40000 ALTER TABLE `cart` ENABLE KEYS */;
+
+
+-- Dumping structure for table webshop.countries
+CREATE TABLE IF NOT EXISTS `countries` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `short` varchar(2) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+-- Dumping data for table webshop.countries: ~0 rows (approximately)
+/*!40000 ALTER TABLE `countries` DISABLE KEYS */;
+INSERT INTO `countries` (`id`, `short`, `name`) VALUES
+	(1, 'hr', 'Hrvatska');
+/*!40000 ALTER TABLE `countries` ENABLE KEYS */;
 
 
 -- Dumping structure for table webshop.groups
@@ -47,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `products` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `description` text,
-  `category_id` int(11),
+  `category_id` int(11) DEFAULT NULL,
   `price` decimal(10,2) NOT NULL,
   `manufacturer` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -86,15 +101,20 @@ CREATE TABLE IF NOT EXISTS `users` (
   `email` varchar(255) NOT NULL,
   `password` text NOT NULL,
   `group_id` int(11) NOT NULL,
+  `country_id` int(11) NOT NULL,
+  `city` varchar(255) NOT NULL,
+  `street` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_Groups` (`group_id`),
-  CONSTRAINT `FK_Groups` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`)
+  KEY `FK_users_countries` (`country_id`),
+  CONSTRAINT `FK_Groups` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`),
+  CONSTRAINT `FK_users_countries` FOREIGN KEY (`country_id`) REFERENCES `countries` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table webshop.users: ~0 rows (approximately)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` (`id`, `username`, `email`, `password`, `group_id`) VALUES
-	(1, 'admin', 'admin@admin.com', 'admin', 1);
+INSERT INTO `users` (`id`, `username`, `email`, `password`, `group_id`, `country_id`, `city`, `street`) VALUES
+	(1, 'admin', 'admin@admin.com', 'admin', 1, 1, '', '');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
