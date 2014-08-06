@@ -20,7 +20,7 @@ public class Repository
         this.openConnection();
     }
     
-    // Users
+    // Users ========================================================================================
     public User loginUser(String email, String password)
     {
         User u = new User();
@@ -74,7 +74,7 @@ public class Repository
         return false;
     }
     
-    // Products
+    // Products ========================================================================================
     public Product getProduct(int id)
     {
         try {
@@ -91,6 +91,7 @@ public class Repository
                 p.setCategoryId(rs.getInt("category_id"));
                 p.setCategory(rs.getString("category_name"));
                 p.setPrice(rs.getBigDecimal("price"));
+                p.setManufacturer(rs.getString("manufacturer"));
             }
             return p;
                 
@@ -130,6 +131,42 @@ public class Repository
         return products;
     }
     
+    // Cart
+    public void addProductToCart(int productID, int userID)
+    {
+        try {
+            ps = con.prepareStatement("INSERT INTO cart (product_id, user_id, quantity) VALUES (?,?,1)");
+            ps.setInt(1, productID);
+            ps.setInt(2, userID);
+            
+            ps.execute();
+        } catch (SQLException e) {
+            System.out.println(e.getLocalizedMessage());
+        }
+    }
+    
+    public int countCartItems(int userID)
+    {
+        int items = 0;
+        
+        try {
+            ps = con.prepareStatement("SELECT COUNT(*) as items FROM cart WHERE user_id = ?");
+            ps.setInt(1, userID);
+            rs = ps.executeQuery();
+            
+            if(rs != null && rs.next())
+            {
+                items = rs.getInt("items");
+            }
+            
+        } catch (SQLException e) {
+            System.out.println(e.getLocalizedMessage());
+        }
+        
+        return items;
+    }
+    
+    // Util
     private void openConnection()
     {
         DBConnectionManager conManager;

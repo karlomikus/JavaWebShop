@@ -4,11 +4,18 @@
 <tpl:navbar_tag />
     
 <div class="container">
-    <h1>${product.name}</h1>
-    <p>
-        ${product.description}
-    </p>
-    <a href="#">Add to cart</a>
+    <div class="row">
+        <div class="col-md-9">
+            <h1>${product.manufacturer} &dash; ${product.name}</h1>
+            <p>
+                ${product.description}
+            </p>
+        </div>
+        <div class="col-md-3 text-center">
+            <h1>$${product.price}</h1>
+            <a href="${pageContext.request.contextPath}/addToCart?product=${product.id}" class="btn btn-primary btn-block">Add to cart</a>
+        </div>
+    </div>
 </div>
     
 <tpl:foot_tag />
