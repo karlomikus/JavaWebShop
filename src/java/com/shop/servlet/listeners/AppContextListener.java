@@ -16,7 +16,6 @@ public class AppContextListener implements ServletContextListener
         
         Repository repo = new Repository();
         ctx.setAttribute("repo", repo);
-        
     }
 
     @Override

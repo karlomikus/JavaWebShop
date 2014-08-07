@@ -35,9 +35,11 @@
             </c:if>
             <li><a href="${pageContext.request.contextPath}/about">About</a></li>
           </ul>
+          <c:if test="${not empty user}">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="${pageContext.request.contextPath}/cart"><span class="glyphicon glyphicon-shopping-cart"></span> Cart (0)</a></li>
+            <li><a href="${pageContext.request.contextPath}/cart"><span class="glyphicon glyphicon-shopping-cart"></span> Cart (${cart})</a></li>
           </ul>
+          </c:if>
         </div><!--/.nav-collapse -->
       </div>
     </div>
