@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="tpl" uri="/WEB-INF/tlds/shop_tld.tld" %>
-<tpl:head_tag title="${product.category} ${product.name}" />
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<tpl:head_tag title="Your shopping cart" />
 <tpl:navbar_tag />
     
 <div class="container">
@@ -16,30 +17,20 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <c:forEach items="${cartItems}" var="cart">
                     <tr>
-                        <td><a href="#"><i class="fa fa-times-circle"></i></a></td>
-                        <td>DT770</td>
-                        <td>2</td>
-                        <td>$129.99</td>
+                        <td><a href="${pageContext.request.contextPath}/cart?remove=${cart.product.id}"><i class="fa fa-times-circle"></i></a></td>
+                        <td>${cart.product.manufacturer} - ${cart.product.name}</td>
+                        <td>${cart.quantity}</td>
+                        <td>$${cart.product.price}</td>
                     </tr>
-                    <tr>
-                        <td><a href="#"><i class="fa fa-times-circle"></i></a></td>
-                        <td>DT880</td>
-                        <td>1</td>
-                        <td>$229.99</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#"><i class="fa fa-times-circle"></i></a></td>
-                        <td>DT990</td>
-                        <td>1</td>
-                        <td>$329.99</td>
-                    </tr>
+                    </c:forEach>
                 </tbody>
                 <tfoot>
                     <tr>
                         <td colspan="2">Total:</td>
-                        <td>4</td>
-                        <td>$600</td>
+                        <td>${totalQuantity}</td>
+                        <td>$${totalPrice}</td>
                     </tr>
                 </tfoot>
             </table>
@@ -49,5 +40,5 @@
         </div>
     </div>
 </div>
-    
+            
 <tpl:foot_tag />

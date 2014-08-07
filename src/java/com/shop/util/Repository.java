@@ -1,5 +1,6 @@
 package com.shop.util;
 
+import com.shop.beans.CartItem;
 import com.shop.beans.Product;
 import com.shop.beans.User;
 import java.sql.Connection;
@@ -131,7 +132,7 @@ public class Repository
         return products;
     }
     
-    // Cart
+    // Cart ========================================================================================
     public void addProductToCart(int productID, int userID)
     {
         try {
@@ -143,6 +144,38 @@ public class Repository
         } catch (SQLException e) {
             System.out.println(e.getLocalizedMessage());
         }
+    }
+    
+    public ArrayList<CartItem> getCartItems(int userID)
+    {
+        ArrayList<CartItem> products = new ArrayList();
+        
+        try {
+            ps = con.prepareStatement("SELECT * FROM cart as c INNER JOIN products as p on p.id = c.product_id WHERE user_id = ?");
+            ps.setInt(1, userID);
+            rs = ps.executeQuery();
+            
+            while(rs.next())
+            {
+                Product p = new Product();
+                p.setId(rs.getInt("product_id"));
+                p.setName(rs.getString("name"));
+                p.setDescription(rs.getString("description"));
+                p.setCategoryId(rs.getInt("category_id"));
+                p.setPrice(rs.getBigDecimal("price"));
+                p.setManufacturer(rs.getString("manufacturer"));
+                
+                CartItem item = new CartItem();
+                item.setProduct(p);
+                item.setQuantity(rs.getInt("quantity"));
+                
+                products.add(item);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getLocalizedMessage());
+        }
+        
+        return products;
     }
     
     public int countCartItems(int userID)
@@ -166,7 +199,7 @@ public class Repository
         return items;
     }
     
-    // Util
+    // Util ========================================================================================
     private void openConnection()
     {
         DBConnectionManager conManager;
