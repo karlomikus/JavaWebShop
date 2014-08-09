@@ -9,7 +9,6 @@ package com.shop.servlets;
 import com.shop.beans.CartItem;
 import com.shop.util.Repository;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

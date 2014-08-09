@@ -11,11 +11,11 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="${pageContext.request.contextPath}/home">AudioCamp</a>
+          <a class="navbar-brand" href="${pageContext.request.contextPath}/">AudioCamp</a>
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="${pageContext.request.contextPath}/browse">Browse</a></li>
+            <li class="active"><a href="${pageContext.request.contextPath}/products">Browse</a></li>
             <c:if test="${not empty user}">
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">${user.username}  <span class="caret"></span></a>
@@ -32,6 +32,7 @@
             </c:if>
             <c:if test="${empty user}">
                 <li><a href="${pageContext.request.contextPath}/login">Login</a></li>
+                <li><a href="${pageContext.request.contextPath}/register">Register</a></li>
             </c:if>
             <li><a href="${pageContext.request.contextPath}/about">About</a></li>
           </ul>

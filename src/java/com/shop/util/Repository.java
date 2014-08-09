@@ -45,6 +45,20 @@ public class Repository
         return u;
     }
     
+    public void registerUser(String username, String email, String password, int groupID)
+    {
+        try {
+            ps = con.prepareStatement("INSERT INTO user (username, email, password, group_id) VALUES (?, ?, ?, ?)");
+            ps.setString(1, username);
+            ps.setString(2, email);
+            ps.setString(3, password);
+            ps.setInt(4, groupID);
+            ps.executeQuery();
+        } catch(SQLException ex) {
+            System.out.println(ex.getLocalizedMessage());
+        }
+    }
+    
     public User getUser(int Id)
     {
         User u = new User();
