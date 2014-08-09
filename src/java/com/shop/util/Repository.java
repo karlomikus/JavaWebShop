@@ -3,6 +3,8 @@ package com.shop.util;
 import com.shop.beans.CartItem;
 import com.shop.beans.Product;
 import com.shop.beans.User;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,15 +26,16 @@ public class Repository
     // Users ========================================================================================
     public User loginUser(String email, String password)
     {
-        User u = new User();
+        User u = null;
         
         try {
             ps = con.prepareStatement("SELECT * FROM users WHERE email=? AND password=? LIMIT 1");
             ps.setString(1, email);
-            ps.setString(2, password);
+            ps.setString(2, generatePasswordHash(password));
             rs = ps.executeQuery();
             
             if(rs !=null && rs.next()) {
+                u = new User();
                 u.setId(rs.getInt("id"));
                 u.setEmail(rs.getString("email"));
                 u.setUsername(rs.getString("username"));
@@ -51,7 +54,7 @@ public class Repository
             ps = con.prepareStatement("INSERT INTO users (username, email, password, group_id) VALUES (?, ?, ?, ?)");
             ps.setString(1, username);
             ps.setString(2, email);
-            ps.setString(3, password);
+            ps.setString(3, generatePasswordHash(password));
             ps.setInt(4, groupID);
             ps.execute();
         } catch(SQLException ex) {
@@ -234,5 +237,25 @@ public class Repository
         } catch (SQLException e) {
             System.out.println(e.getLocalizedMessage());
         }
+    }
+    
+    public String generatePasswordHash(String input)
+    {
+        StringBuilder hash = new StringBuilder();
+        
+        try {
+            MessageDigest sha = MessageDigest.getInstance("SHA-1");
+            byte[] hashedBytes = sha.digest(input.getBytes());
+            char[] digits = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+            for(int idx = 0; idx < hashedBytes.length; idx++) {
+                byte b = hashedBytes[idx];
+                hash.append(digits[(b & 0xf0) >> 4]);
+                hash.append(digits[b & 0x0f]);
+            }
+        } catch(NoSuchAlgorithmException e) {
+            
+        }
+        
+        return hash.toString();
     }
 }
