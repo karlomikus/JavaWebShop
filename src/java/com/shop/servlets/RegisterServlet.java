@@ -46,7 +46,7 @@ public class RegisterServlet extends HttpServlet
         }
         
         if(errorMsg != null) {
-            response.sendRedirect(request.getContextPath() + "/error");
+            response.sendRedirect(request.getContextPath() + "/error.jsp");
         }
         else {
             Repository repo = (Repository) getServletContext().getAttribute("repo");

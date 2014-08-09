@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.shop.servlets;
 
 import com.shop.beans.User;
@@ -11,16 +5,11 @@ import com.shop.util.Repository;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author Karlo
- */
 @WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
 public class LoginServlet extends HttpServlet
 {
@@ -53,7 +42,7 @@ public class LoginServlet extends HttpServlet
                 response.sendRedirect(request.getContextPath() + "/home");
             }
             else {
-                response.sendRedirect(request.getContextPath() + "/error");
+                response.sendRedirect(request.getContextPath() + "/error.jsp");
             }
         }
     }
