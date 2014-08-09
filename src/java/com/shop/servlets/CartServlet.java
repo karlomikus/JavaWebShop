@@ -7,6 +7,7 @@
 package com.shop.servlets;
 
 import com.shop.beans.CartItem;
+import com.shop.beans.User;
 import com.shop.util.Repository;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -28,7 +30,9 @@ public class CartServlet extends HttpServlet
             throws ServletException, IOException
     {
         Repository repo = (Repository) getServletContext().getAttribute("repo");
-        ArrayList<CartItem> cartItems = repo.getCartItems(1);
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("user");
+        ArrayList<CartItem> cartItems = repo.getCartItems(u.getId());
         
         double totalPrice = 0;
         int totalQuantity = 0;

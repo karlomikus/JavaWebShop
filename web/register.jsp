@@ -8,7 +8,7 @@
     <form role="form" action="${pageContext.request.contextPath}/register" method="post">
       <div class="form-group">
         <label for="username">Username</label>
-        <input name="username" type="email" class="form-control" id="username" placeholder="Enter username">
+        <input name="username" type="text" class="form-control" id="username" placeholder="Enter username">
       </div>
       <div class="form-group">
         <label for="email">Email address</label>

@@ -48,12 +48,12 @@ public class Repository
     public void registerUser(String username, String email, String password, int groupID)
     {
         try {
-            ps = con.prepareStatement("INSERT INTO user (username, email, password, group_id) VALUES (?, ?, ?, ?)");
+            ps = con.prepareStatement("INSERT INTO users (username, email, password, group_id) VALUES (?, ?, ?, ?)");
             ps.setString(1, username);
             ps.setString(2, email);
             ps.setString(3, password);
             ps.setInt(4, groupID);
-            ps.executeQuery();
+            ps.execute();
         } catch(SQLException ex) {
             System.out.println(ex.getLocalizedMessage());
         }
