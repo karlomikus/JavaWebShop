@@ -1,0 +1,25 @@
+.products {
+    overflow: hidden;
+}
+
+.products .product {
+    float: left;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #cedff3;
+    width: 250px;
+    overflow: hidden;
+}
+
+.product:hover {
+    border-color: #428bca;
+}
+
+.products .product-image img {
+    width: 250px;
+    height: 200px;
+}
+
+.product .product-info {
+    padding: 10px 20px;
+}

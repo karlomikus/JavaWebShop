@@ -18,6 +18,7 @@ public class ProductsServlet extends HttpServlet
         Repository repo = (Repository) getServletContext().getAttribute("repo");
         
         request.setAttribute("products", repo.getProducts());
+        request.setAttribute("categories", repo.getCategories());
         request.getRequestDispatcher("products.jsp").forward(request, response);
     }
 }

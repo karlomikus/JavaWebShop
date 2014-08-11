@@ -11,6 +11,7 @@ public class Product
     private String category;
     private BigDecimal price;
     private String manufacturer;
+    private String image;
 
     public int getId()
     {
@@ -80,6 +81,16 @@ public class Product
     public void setManufacturer(String manufacturer)
     {
         this.manufacturer = manufacturer;
+    }
+
+    public String getImage()
+    {
+        return image;
+    }
+
+    public void setImage(String image)
+    {
+        this.image = image;
     }
     
 }

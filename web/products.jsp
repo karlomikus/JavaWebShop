@@ -4,12 +4,42 @@
 <tpl:head_tag title="stuff" />
 <tpl:navbar_tag />
 <div class="container">
-    <h1>Products</h1>
+    
+    <div class="row">
+        <div class="col-md-3">
+            
+            <h2>Categories:</h2>
+            
+            <div class="list-group">
+                <a href="${pageContext.request.contextPath}/products" class="list-group-item active">All</a>
+                <c:forEach items="${categories}" var="category">
+                <a href="${pageContext.request.contextPath}/category?id=${category.id}" class="list-group-item">${category.name}</a>
+                </c:forEach>
+            </div>
+            
+        </div>
+        <div class="col-md-9">
+            
+            <h2>Products:</h2>
+            
+            <div class="products">
+                <c:forEach items="${products}" var="product">
+                <div class="product">
+                    <div class="product-image">
+                        <a href="${pageContext.request.contextPath}/product?id=${product.id}">
+                            <img src="<c:url value="/uploads/products/${product.image}" />" alt="Product" />
+                        </a>
+                    </div>
+                    <div class="product-info">
+                        <h4>${product.manufacturer} - ${product.name}</h4>
+                        <span class="text-info">$${product.price}</span>
+                    </div>
+                </div>
+                </c:forEach>
+            </div>
 
-    <ul>
-        <c:forEach items="${products}" var="product">
-            <li><a href="${pageContext.request.contextPath}/product?id=${product.id}">${product.name}</a> in ${product.category}</li>
-        </c:forEach>
-    </ul>
+        </div>
+    </div>
+    
 </div>
 <tpl:foot_tag />

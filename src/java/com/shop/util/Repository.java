@@ -1,6 +1,7 @@
 package com.shop.util;
 
 import com.shop.beans.CartItem;
+import com.shop.beans.Category;
 import com.shop.beans.Product;
 import com.shop.beans.User;
 import java.security.MessageDigest;
@@ -139,6 +140,7 @@ public class Repository
                 p.setCategory(rs.getString("category_name"));
                 p.setPrice(rs.getBigDecimal("price"));
                 p.setManufacturer(rs.getString("manufacturer"));
+                p.setImage(rs.getString("image"));
                 
                 products.add(p);
             }
@@ -147,6 +149,32 @@ public class Repository
         }
         
         return products;
+    }
+    
+    // Categories ========================================================================================
+    public ArrayList<Category> getCategories()
+    {
+        ArrayList<Category> categories = new ArrayList();
+        
+        try {
+            ps = con.prepareStatement("SELECT * FROM products_categories ORDER BY name ASC");
+            rs = ps.executeQuery();
+            
+            while(rs.next())
+            {
+                Category c = new Category();
+                
+                c.setId(rs.getInt("id"));
+                c.setName(rs.getString("name"));
+                c.setDescription(rs.getString("description"));
+                
+                categories.add(c);
+            }
+        } catch(SQLException ex) {
+            System.out.println(ex.getLocalizedMessage());
+        }
+        
+        return categories;
     }
     
     // Cart ========================================================================================
