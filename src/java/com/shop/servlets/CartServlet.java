@@ -29,7 +29,7 @@ public class CartServlet extends HttpServlet
         
         for(CartItem item : cartItems)
         {
-            totalPrice += item.getProduct().getPrice().doubleValue();
+            totalPrice += item.getProduct().getPrice().doubleValue() * item.getQuantity();
             totalQuantity += item.getQuantity();
         }
         
