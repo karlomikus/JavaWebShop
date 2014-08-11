@@ -1,3 +1,9 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 package com.shop.util;
 
 import com.shop.beans.User;
@@ -14,8 +20,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebFilter(filterName = "AuthFilter", urlPatterns = {"/cart", "/addToCart"})
-public class AuthFilter implements Filter
+/**
+ *
+ * @author Karlo
+ */
+@WebFilter(filterName = "GlobalFilter", urlPatterns = {"/*"})
+public class GlobalFilter implements Filter
 {
     private ServletContext context;
 
@@ -32,12 +42,13 @@ public class AuthFilter implements Filter
         HttpServletResponse res = (HttpServletResponse) response;
         HttpSession session = req.getSession();
         
-        if(session.getAttribute("user") == null) {
-            res.sendRedirect(req.getContextPath() + "/login");
-        }
-        else {
+        if(session.getAttribute("user") != null) {
+            Repository repo = (Repository) context.getAttribute("repo");
+            User u = (User) session.getAttribute("user");
+            session.setAttribute("cartCount", repo.countCartItems(u.getId()));
             chain.doFilter(request, response);
         }
+        chain.doFilter(request, response);
     }
 
     @Override

@@ -35,7 +35,7 @@
                 </tfoot>
             </table>
             <div class="well">
-                <a href="#" class="btn btn-success">Place order</a>
+                <a href="${pageContext.request.contextPath}/placeOrder" class="btn btn-success">Place order</a>
             </div>
         </div>
     </div>
