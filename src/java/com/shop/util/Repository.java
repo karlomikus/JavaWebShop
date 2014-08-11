@@ -168,7 +168,7 @@ public class Repository
         ArrayList<CartItem> products = new ArrayList();
         
         try {
-            ps = con.prepareStatement("SELECT * FROM cart as c INNER JOIN products as p on p.id = c.product_id WHERE user_id = ?");
+            ps = con.prepareStatement("SELECT sum(c.quantity) as quantity_sum, c.*, p.* FROM cart as c INNER JOIN products as p ON p.id = c.product_id WHERE c.user_id = ? GROUP BY c.product_id");
             ps.setInt(1, userID);
             rs = ps.executeQuery();
             
@@ -184,7 +184,7 @@ public class Repository
                 
                 CartItem item = new CartItem();
                 item.setProduct(p);
-                item.setQuantity(rs.getInt("quantity"));
+                item.setQuantity(rs.getInt("quantity_sum"));
                 
                 products.add(item);
             }
