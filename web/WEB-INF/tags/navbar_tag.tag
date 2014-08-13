@@ -22,9 +22,6 @@
                 <ul class="dropdown-menu" role="menu">
                     <li><a href="#">Profile</a></li>
                     <li><a href="#">Orders</a></li>
-                    <li><a href="#">Wishlist</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">Administration</a></li>
                     <li class="divider"></li>
                     <li><a href="${pageContext.request.contextPath}/logout">Logout</a></li>
                 </ul>
@@ -34,7 +31,6 @@
                 <li><a href="${pageContext.request.contextPath}/login">Login</a></li>
                 <li><a href="${pageContext.request.contextPath}/register">Register</a></li>
             </c:if>
-            <li><a href="${pageContext.request.contextPath}/about">About</a></li>
           </ul>
           <c:if test="${not empty user}">
           <ul class="nav navbar-nav navbar-right">
