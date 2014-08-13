@@ -15,10 +15,25 @@ public class ProductsServlet extends HttpServlet
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
-        Repository repo = (Repository) getServletContext().getAttribute("repo");
-        
-        request.setAttribute("products", repo.getProducts());
-        request.setAttribute("categories", repo.getCategories());
-        request.getRequestDispatcher("products.jsp").forward(request, response);
+        int categoryID = 0;
+        if(request.getParameterNames().hasMoreElements())
+        {
+            categoryID = Integer.parseInt(request.getParameter("category"));
+            
+            Repository repo = (Repository) getServletContext().getAttribute("repo");
+
+            request.setAttribute("products", repo.getProductsFromCategory(categoryID));
+            request.setAttribute("categories", repo.getCategories());
+            request.setAttribute("categoryID", categoryID);
+            request.getRequestDispatcher("products.jsp").forward(request, response);
+        }
+        else
+        {
+            Repository repo = (Repository) getServletContext().getAttribute("repo");
+
+            request.setAttribute("products", repo.getProducts());
+            request.setAttribute("categories", repo.getCategories());
+            request.getRequestDispatcher("products.jsp").forward(request, response);
+        }
     }
 }

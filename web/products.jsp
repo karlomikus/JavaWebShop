@@ -11,9 +11,9 @@
             <h2>Categories:</h2>
             
             <div class="list-group">
-                <a href="${pageContext.request.contextPath}/products" class="list-group-item active">All</a>
+                <a href="${pageContext.request.contextPath}/products" class="list-group-item ${empty categoryID ? 'active' : ''}">All</a>
                 <c:forEach items="${categories}" var="category">
-                <a href="${pageContext.request.contextPath}/category?id=${category.id}" class="list-group-item">${category.name}</a>
+                <a href="${pageContext.request.contextPath}/products?category=${category.id}" class="list-group-item ${categoryID == category.id ? 'active' : ''}">${category.name}</a>
                 </c:forEach>
             </div>
             

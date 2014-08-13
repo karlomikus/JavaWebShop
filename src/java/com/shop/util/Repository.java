@@ -152,6 +152,37 @@ public class Repository
         return products;
     }
     
+    public ArrayList<Product> getProductsFromCategory(int categoryID)
+    {
+        ArrayList<Product> products = new ArrayList();
+        
+        try {
+            ps = con.prepareStatement("SELECT p.*, c.name AS 'category_name' FROM products AS p INNER JOIN products_categories AS c ON p.category_id = c.id WHERE category_id = ?");
+            ps.setInt(1, categoryID);
+            rs = ps.executeQuery();
+            
+            while(rs.next())
+            {
+                Product p = new Product();
+                
+                p.setId(rs.getInt("id"));
+                p.setName(rs.getString("name"));
+                p.setDescription(rs.getString("description"));
+                p.setCategoryId(rs.getInt("category_id"));
+                p.setCategory(rs.getString("category_name"));
+                p.setPrice(rs.getBigDecimal("price"));
+                p.setManufacturer(rs.getString("manufacturer"));
+                p.setImage(rs.getString("image"));
+                
+                products.add(p);
+            }
+        } catch(SQLException ex) {
+            System.out.println(ex.getLocalizedMessage());
+        }
+        
+        return products;
+    }
+    
     // Categories ========================================================================================
     public ArrayList<Category> getCategories()
     {
