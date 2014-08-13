@@ -2,6 +2,7 @@ package com.shop.util;
 
 import com.shop.beans.CartItem;
 import com.shop.beans.Category;
+import com.shop.beans.Country;
 import com.shop.beans.Product;
 import com.shop.beans.User;
 import java.security.MessageDigest;
@@ -274,6 +275,31 @@ public class Repository
         }
         
         return items;
+    }
+    
+    // Country ========================================================================================
+    public ArrayList<Country> getCountries()
+    {
+        ArrayList<Country> countries = new ArrayList();
+        
+        try {
+            ps = con.prepareStatement("SELECT * FROM countries");
+            rs = ps.executeQuery();
+            
+            while(rs.next())
+            {
+                Country c = new Country();
+                c.setId(rs.getInt("id"));
+                c.setCode(rs.getString("code"));
+                c.setName(rs.getString("name"));
+                
+                countries.add(c);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getLocalizedMessage());
+        }
+        
+        return countries;
     }
     
     // Util ========================================================================================

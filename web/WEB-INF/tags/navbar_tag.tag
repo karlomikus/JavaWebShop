@@ -20,8 +20,8 @@
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">${user.username}  <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">Profile</a></li>
-                    <li><a href="#">Orders</a></li>
+                    <li><a href="${pageContext.request.contextPath}/profile">Profile</a></li>
+                    <li><a href="${pageContext.request.contextPath}/orders">Orders</a></li>
                     <li class="divider"></li>
                     <li><a href="${pageContext.request.contextPath}/logout">Logout</a></li>
                 </ul>
