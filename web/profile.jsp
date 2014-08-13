@@ -11,17 +11,25 @@
             <form role="form" action="${pageContext.request.contextPath}/profile" method="post">
                 <div class="form-group">
                   <label for="country">Country</label>
-                  <input name="country" type="text" class="form-control" id="country" placeholder="Enter country">
+                  <select name="country" class="form-control" id="country">
+                    <c:forEach items="${countries}" var="country">
+                        <option value="${country.id}">${country.name}</option>
+                    </c:forEach>
+                  </select>
                 </div>
                 <div class="form-group">
                   <label for="city">City</label>
                   <input name="city" type="text" class="form-control" id="city" placeholder="Enter city">
                 </div>
                 <div class="form-group">
+                  <label for="post">Post number</label>
+                  <input name="post" type="text" class="form-control" id="post" placeholder="Enter post number">
+                </div>
+                <div class="form-group">
                   <label for="street">Street</label>
                   <input name="street" type="text" class="form-control" id="street" placeholder="Enter street">
                 </div>
-                <button type="submit" class="btn btn-primary">Login</button>
+                <button type="submit" class="btn btn-primary">Save</button>
             </form>
         </div>
         <div class="col-md-4">

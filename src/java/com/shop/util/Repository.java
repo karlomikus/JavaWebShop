@@ -283,7 +283,7 @@ public class Repository
         ArrayList<Country> countries = new ArrayList();
         
         try {
-            ps = con.prepareStatement("SELECT * FROM countries");
+            ps = con.prepareStatement("SELECT * FROM countries ORDER BY name ASC");
             rs = ps.executeQuery();
             
             while(rs.next())
