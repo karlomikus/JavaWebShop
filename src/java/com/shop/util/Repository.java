@@ -111,6 +111,7 @@ public class Repository
                 p.setCategory(rs.getString("category_name"));
                 p.setPrice(rs.getBigDecimal("price"));
                 p.setManufacturer(rs.getString("manufacturer"));
+                p.setImage(rs.getString("image"));
             }
             return p;
                 
