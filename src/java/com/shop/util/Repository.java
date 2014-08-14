@@ -31,7 +31,7 @@ public class Repository
         User u = null;
         
         try {
-            ps = con.prepareStatement("SELECT * FROM users WHERE email=? AND password=? LIMIT 1");
+            ps = con.prepareStatement("SELECT u.*, c.name AS country_name FROM users AS u INNER JOIN countries AS c ON u.country_id = c.id WHERE u.email=? AND u.password=? LIMIT 1");
             ps.setString(1, email);
             ps.setString(2, generatePasswordHash(password));
             rs = ps.executeQuery();
@@ -42,6 +42,12 @@ public class Repository
                 u.setEmail(rs.getString("email"));
                 u.setUsername(rs.getString("username"));
                 u.setGroup_id(rs.getInt("group_id"));
+                u.setCity(rs.getString("city"));
+                u.setCountry(rs.getString("country_name"));
+                u.setFirstName(rs.getString("first_name"));
+                u.setLastName(rs.getString("last_name"));
+                u.setPostNumber(rs.getInt("post_number"));
+                u.setStreet(rs.getString("street"));
             }
         } catch(SQLException ex) {
             System.out.println(ex.getLocalizedMessage());
@@ -64,14 +70,44 @@ public class Repository
         }
     }
     
-    public User getUser(int Id)
+    public void updateProfile(int userID, int postNumber, int countryID, String street, String city)
     {
-        User u = new User();
+        try {
+            ps = con.prepareStatement("UPDATE users SET post_number = ?, country_id = ?, street = ?, city = ? WHERE id = ?");
+            ps.setInt(1, postNumber);
+            ps.setInt(2, countryID);
+            ps.setString(3, street);
+            ps.setString(4, city);
+            ps.setInt(5, userID);
+            ps.execute();
+            
+        } catch(SQLException ex) {
+            System.out.println(ex.getLocalizedMessage());
+        }
+    }
+    
+    public User getUserById(int id)
+    {
+        User u = null;
         
         try {
-            ps = con.prepareStatement("SELECT * FROM users WHERE id=? LIMIT 1");
-            ps.setInt(1, Id);
+            ps = con.prepareStatement("SELECT u.*, c.name AS country_name FROM users AS u INNER JOIN countries AS c ON u.country_id = c.id WHERE u.id=? LIMIT 1");
+            ps.setInt(1, id);
             rs = ps.executeQuery();
+            
+            if(rs !=null && rs.next()) {
+                u = new User();
+                u.setId(rs.getInt("id"));
+                u.setEmail(rs.getString("email"));
+                u.setUsername(rs.getString("username"));
+                u.setGroup_id(rs.getInt("group_id"));
+                u.setCity(rs.getString("city"));
+                u.setCountry(rs.getString("country_name"));
+                u.setFirstName(rs.getString("first_name"));
+                u.setLastName(rs.getString("last_name"));
+                u.setPostNumber(rs.getInt("post_number"));
+                u.setStreet(rs.getString("street"));
+            }
         } catch(SQLException ex) {
             System.out.println(ex.getLocalizedMessage());
         }

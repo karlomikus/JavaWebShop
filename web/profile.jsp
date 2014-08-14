@@ -13,21 +13,21 @@
                   <label for="country">Country</label>
                   <select name="country" class="form-control" id="country">
                     <c:forEach items="${countries}" var="country">
-                        <option value="${country.id}">${country.name}</option>
+                        <option value="${country.id}" ${country.name == profile.country ? 'selected' : ''}>${country.name}</option>
                     </c:forEach>
                   </select>
                 </div>
                 <div class="form-group">
                   <label for="city">City</label>
-                  <input name="city" type="text" class="form-control" id="city" placeholder="Enter city">
+                  <input name="city" type="text" class="form-control" id="city" placeholder="Enter city" value="${profile.city}">
                 </div>
                 <div class="form-group">
                   <label for="post">Post number</label>
-                  <input name="post" type="text" class="form-control" id="post" placeholder="Enter post number">
+                  <input name="post" type="text" class="form-control" id="post" placeholder="Enter post number" value="${profile.postNumber}">
                 </div>
                 <div class="form-group">
                   <label for="street">Street</label>
-                  <input name="street" type="text" class="form-control" id="street" placeholder="Enter street">
+                  <input name="street" type="text" class="form-control" id="street" placeholder="Enter street" value="${profile.street}">
                 </div>
                 <button type="submit" class="btn btn-primary">Save</button>
             </form>
@@ -37,21 +37,19 @@
             <div class="well">
                 <dl class="dl-horizontal">
                     <dt>Full name</dt>
-                    <dd>Karlo mikus</dd>
+                    <dd>${profile.firstName} ${profile.lastName}</dd>
                     <dt>Country</dt>
-                    <dd>Croatia</dd>
+                    <dd>${profile.country}</dd>
                     <dt>City</dt>
-                    <dd>Zagreb</dd>
+                    <dd>${profile.city}</dd>
                     <dt>Post Number</dt>
-                    <dd>10 000</dd>
+                    <dd>${profile.postNumber}</dd>
                     <dt>Street</dt>
-                    <dd>Primorska 19</dd>
+                    <dd>${profile.street}</dd>
                     <dt>Username</dt>
-                    <dd>admin</dd>
+                    <dd>${profile.username}</dd>
                     <dt>Email</dt>
-                    <dd>admin@admin.com</dd>
-                    <dt>Group</dt>
-                    <dd>Admins</dd>
+                    <dd>${profile.email}</dd>
                 </dl>
             </div>
         </div>

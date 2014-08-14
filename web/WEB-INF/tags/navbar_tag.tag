@@ -15,7 +15,7 @@
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="${pageContext.request.contextPath}/products">Browse</a></li>
+            <li><a href="${pageContext.request.contextPath}/products">Browse</a></li>
             <c:if test="${not empty user}">
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">${user.username}  <span class="caret"></span></a>

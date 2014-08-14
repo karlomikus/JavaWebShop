@@ -1,6 +1,5 @@
 package com.shop.util;
 
-import com.shop.beans.User;
 import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -14,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebFilter(filterName = "AuthFilter", urlPatterns = {"/cart", "/addToCart"})
+@WebFilter(filterName = "AuthFilter", urlPatterns = {"/cart", "/addToCart", "/profile"})
 public class AuthFilter implements Filter
 {
     private ServletContext context;

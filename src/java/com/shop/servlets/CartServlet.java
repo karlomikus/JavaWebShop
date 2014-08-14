@@ -33,6 +33,7 @@ public class CartServlet extends HttpServlet
             totalQuantity += item.getQuantity();
         }
         
+        session.setAttribute("cartCount", repo.countCartItems(u.getId()));        
         request.setAttribute("cartItems", cartItems);
         request.setAttribute("totalPrice", totalPrice);
         request.setAttribute("totalQuantity", totalQuantity);
