@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebFilter(filterName = "AuthFilter", urlPatterns = {"/cart", "/addToCart", "/profile"})
+@WebFilter(filterName = "AuthFilter", urlPatterns = {"/cart", "/addToCart", "/profile", "/orders"})
 public class AuthFilter implements Filter
 {
     private ServletContext context;

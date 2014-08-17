@@ -13,6 +13,8 @@ public class User
     private String street;
     private String firstName;
     private String lastName;
+    
+    public User() {}
 
     public String getCountry()
     {

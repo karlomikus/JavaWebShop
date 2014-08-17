@@ -3,6 +3,7 @@ package com.shop.util;
 import com.shop.beans.CartItem;
 import com.shop.beans.Category;
 import com.shop.beans.Country;
+import com.shop.beans.Order;
 import com.shop.beans.Product;
 import com.shop.beans.User;
 import java.security.MessageDigest;
@@ -363,8 +364,13 @@ public class Repository
             ps.setString(2, currentDateTime);
             ps.execute();
             
-            rs = ps.executeQuery("SELECT MAX(id) as id FROM orders");
-            int orderID = rs.getInt("id");
+            PreparedStatement psLastOrder = con.prepareStatement("SELECT MAX(id) as id FROM orders");
+            ResultSet rs2 = psLastOrder.executeQuery();
+            int orderID = 0;
+            if(rs2.next())
+                orderID = rs2.getInt("id");
+            
+            System.out.println("Got order ID: "+orderID);
             
             for(CartItem item : items)
             {
@@ -378,8 +384,60 @@ public class Repository
             clearUserCart(userID);
             
         } catch (SQLException e) {
+            System.out.println("error: " + e.getLocalizedMessage());
+        }
+    }
+    
+    public ArrayList<Order> getOrders(int userID)
+    {
+        ArrayList<Order> orders = new ArrayList();
+        
+        try {
+            ps = con.prepareStatement("SELECT * FROM orders WHERE user_id = ? GROUP BY id");
+            ps.setInt(1, userID);
+            rs = ps.executeQuery();
+            
+            while(rs.next())
+            {
+                Order o = new Order();
+                o.setId(rs.getInt("id"));
+                o.setDate(rs.getString("date"));
+                o.setStatus(rs.getString("status"));
+                o.setProducts(getOrderProducts(rs.getInt("id")));
+                orders.add(o);
+            }
+        } catch (SQLException e) {
             System.out.println(e.getLocalizedMessage());
         }
+        
+        return orders;
+    }
+    
+    public ArrayList<Product> getOrderProducts(int orderID)
+    {
+        ArrayList<Product> products = new ArrayList();
+        PreparedStatement ps2 = null;
+        ResultSet rs2 = null;
+        
+        try {
+            ps2 = con.prepareStatement("SELECT * FROM orders_products AS op INNER JOIN products AS p ON op.product_id = p.id WHERE op.order_id = ?");
+            ps2.setInt(1, orderID);
+            rs2 = ps2.executeQuery();
+            
+            while(rs2.next())
+            {
+                Product p = new Product();
+                p.setId(rs2.getInt("product_id"));
+                p.setName(rs2.getString("name"));
+                p.setPrice(rs2.getBigDecimal("price"));
+                p.setManufacturer(rs2.getString("manufacturer"));
+                products.add(p);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getLocalizedMessage());
+        }
+        
+        return products;
     }
     
     // Util ========================================================================================

@@ -12,6 +12,8 @@ public class Product
     private BigDecimal price;
     private String manufacturer;
     private String image;
+    
+    public Product() {}
 
     public int getId()
     {
