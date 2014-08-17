@@ -24,17 +24,10 @@ CREATE TABLE IF NOT EXISTS `cart` (
   PRIMARY KEY (`id`),
   KEY `FK_cart_users` (`user_id`),
   CONSTRAINT `FK_cart_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
--- Dumping data for table webshop.cart: ~5 rows (approximately)
+-- Dumping data for table webshop.cart: ~6 rows (approximately)
 /*!40000 ALTER TABLE `cart` DISABLE KEYS */;
-INSERT INTO `cart` (`id`, `product_id`, `user_id`, `quantity`) VALUES
-	(1, 1, 1, 1),
-	(2, 2, 1, 1),
-	(3, 1, 2, 1),
-	(4, 2, 1, 1),
-	(5, 4, 2, 1),
-	(6, 4, 2, 1);
 /*!40000 ALTER TABLE `cart` ENABLE KEYS */;
 
 
@@ -46,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `countries` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=243 DEFAULT CHARSET=latin1;
 
--- Dumping data for table webshop.countries: ~0 rows (approximately)
+-- Dumping data for table webshop.countries: ~242 rows (approximately)
 /*!40000 ALTER TABLE `countries` DISABLE KEYS */;
 INSERT INTO `countries` (`id`, `code`, `name`) VALUES
 	(1, 'US', 'United States'),
@@ -310,6 +303,49 @@ INSERT INTO `groups` (`id`, `name`, `description`) VALUES
 /*!40000 ALTER TABLE `groups` ENABLE KEYS */;
 
 
+-- Dumping structure for table webshop.orders
+CREATE TABLE IF NOT EXISTS `orders` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL DEFAULT '0',
+  `date` datetime DEFAULT NULL,
+  `status` enum('pending','denied','paid') DEFAULT 'pending',
+  PRIMARY KEY (`id`),
+  KEY `FK_orders_users` (`user_id`),
+  CONSTRAINT `FK_orders_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+
+-- Dumping data for table webshop.orders: ~1 rows (approximately)
+/*!40000 ALTER TABLE `orders` DISABLE KEYS */;
+INSERT INTO `orders` (`id`, `user_id`, `date`, `status`) VALUES
+	(7, 1, '2014-08-17 17:55:04', 'pending'),
+	(8, 1, '2014-08-17 18:31:06', 'pending');
+/*!40000 ALTER TABLE `orders` ENABLE KEYS */;
+
+
+-- Dumping structure for table webshop.orders_products
+CREATE TABLE IF NOT EXISTS `orders_products` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `quantity` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_orders_products_products` (`product_id`),
+  KEY `FK_orders_products_orders` (`order_id`),
+  CONSTRAINT `FK_orders_products_orders` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
+  CONSTRAINT `FK_orders_products_products` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+-- Dumping data for table webshop.orders_products: ~0 rows (approximately)
+/*!40000 ALTER TABLE `orders_products` DISABLE KEYS */;
+INSERT INTO `orders_products` (`id`, `product_id`, `order_id`, `quantity`) VALUES
+	(1, 1, 7, 2),
+	(2, 2, 7, 3),
+	(3, 6, 7, 1),
+	(4, 9, 7, 1),
+	(5, 1, 8, 1);
+/*!40000 ALTER TABLE `orders_products` ENABLE KEYS */;
+
+
 -- Dumping structure for table webshop.products
 CREATE TABLE IF NOT EXISTS `products` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -324,7 +360,7 @@ CREATE TABLE IF NOT EXISTS `products` (
   CONSTRAINT `FK_Category` FOREIGN KEY (`category_id`) REFERENCES `products_categories` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
--- Dumping data for table webshop.products: ~13 rows (approximately)
+-- Dumping data for table webshop.products: ~11 rows (approximately)
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
 INSERT INTO `products` (`id`, `name`, `description`, `category_id`, `price`, `manufacturer`, `image`) VALUES
 	(1, 'DT770', '<h3>Sound you can rely on | Superior build quality | Every part is replaceable</h3>\r\n<p>\r\n    The DT 770 PRO is a closed dynamic headphone which has been designed for critical music and sound monitoring. The single-sided cable makes the handling of the headphone easy.\r\n</p>\r\n<ul>\r\n    <li>Closed diffuse-field studio headphone</li>\r\n    <li>"Bass reflex" technology for improved bass response</li>\r\n    <li>Comfortable fit due to rugged, adjustable, soft padded headband construction</li>\r\n    <li>Robust, easy serviceable construction as all parts are replaceable</li>\r\n    <li>Velour, circumaural and replaceable ear pads</li>\r\n    <li>3.0 m (9.8 ft.) coiled cable (single-sided)</li>\r\n    <li>Including drawstring bag</li>\r\n</ul>\r\n<h3>History of DT 770 PRO / DT 880 PRO / DT 990 PRO:</h3>\r\n<p>beyerdynamic’s DT 770 PRO, DT 880 PRO and DT 990 PRO headphone series has it’s roots in the early 1980s. Since then, millions of audio professionals from all parts of the world have become loyal users of beyerdynamic products.</p>\r\n<ul>\r\n    <li>DT 770 PRO, 32 ohms for mobile applications</li>\r\n    <li>DT 770 PRO, 80 ohms for recording applications within the studio</li>\r\n    <li>DT 770 PRO, 250 ohms for mixing applications in the studio</li>\r\n</ul>', 1, 159.99, 'Beyerdynamic', '1.jpg'),
@@ -385,7 +421,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Dumping data for table webshop.users: ~2 rows (approximately)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `username`, `email`, `password`, `group_id`, `country_id`, `city`, `post_number`, `street`, `first_name`, `last_name`) VALUES
-	(1, 'admin', 'admin@admin.com', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 1, '', NULL, '', NULL, NULL),
+	(1, 'admin', 'admin@admin.com', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 54, 'Zagreb', 10000, 'Domobranska 19', 'Karlo', 'Mikuš'),
 	(2, 'user1', 'user1@user.com', 'd033e22ae348aeb5660fc2140aec35850c4da997', 2, NULL, NULL, NULL, NULL, NULL, NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
