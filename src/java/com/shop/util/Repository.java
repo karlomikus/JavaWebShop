@@ -11,7 +11,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Repository
 {
@@ -313,6 +315,17 @@ public class Repository
         return items;
     }
     
+    public void clearUserCart(int userID)
+    {
+        try {
+            ps = con.prepareStatement("DELETE FROM cart WHERE user_id = ?");
+            ps.setInt(1, userID);
+            ps.execute();            
+        } catch (SQLException e) {
+            System.out.println(e.getLocalizedMessage());
+        }
+    }
+    
     // Country ========================================================================================
     public ArrayList<Country> getCountries()
     {
@@ -336,6 +349,37 @@ public class Repository
         }
         
         return countries;
+    }
+    
+    // Orders ========================================================================================
+    public void newOrder(int userID, ArrayList<CartItem> items)
+    {
+        Date dt = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String currentDateTime = sdf.format(dt);
+        try {
+            ps = con.prepareStatement("INSERT INTO orders (user_id, date) VALUES (?, ?)");
+            ps.setInt(1, userID);
+            ps.setString(2, currentDateTime);
+            ps.execute();
+            
+            rs = ps.executeQuery("SELECT MAX(id) as id FROM orders");
+            int orderID = rs.getInt("id");
+            
+            for(CartItem item : items)
+            {
+                ps = con.prepareStatement("INSERT INTO orders_products (order_id, product_id, quantity) VALUES (?, ?, ?)");
+                ps.setInt(1, orderID);
+                ps.setInt(2, item.getProduct().getId());
+                ps.setInt(3, item.getQuantity());
+                ps.execute();
+            }
+            
+            clearUserCart(userID);
+            
+        } catch (SQLException e) {
+            System.out.println(e.getLocalizedMessage());
+        }
     }
     
     // Util ========================================================================================

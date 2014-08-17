@@ -4,6 +4,9 @@ import com.shop.beans.CartItem;
 import com.shop.beans.User;
 import com.shop.util.Repository;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,9 +36,12 @@ public class CartServlet extends HttpServlet
             totalQuantity += item.getQuantity();
         }
         
+        BigDecimal priceSummary = new BigDecimal(totalPrice);
+        priceSummary = priceSummary.setScale(2, RoundingMode.UP);
+        
         session.setAttribute("cartCount", repo.countCartItems(u.getId()));        
         request.setAttribute("cartItems", cartItems);
-        request.setAttribute("totalPrice", totalPrice);
+        request.setAttribute("totalPrice", priceSummary);
         request.setAttribute("totalQuantity", totalQuantity);
         request.getRequestDispatcher("/cart.jsp").forward(request, response);
     }
