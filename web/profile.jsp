@@ -10,6 +10,14 @@
             <h1>Edit shipping information:</h1>
             <form role="form" action="${pageContext.request.contextPath}/profile" method="post">
                 <div class="form-group">
+                  <label for="fname">First name</label>
+                  <input name="fname" type="text" class="form-control" id="fname" placeholder="Enter first name" value="${profile.firstName}">
+                </div>
+                <div class="form-group">
+                  <label for="lname">Last name</label>
+                  <input name="lname" type="text" class="form-control" id="lname" placeholder="Enter last name" value="${profile.lastName}">
+                </div>
+                <div class="form-group">
                   <label for="country">Country</label>
                   <select name="country" class="form-control" id="country">
                     <c:forEach items="${countries}" var="country">

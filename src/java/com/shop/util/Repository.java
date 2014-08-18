@@ -75,15 +75,17 @@ public class Repository
         }
     }
     
-    public void updateProfile(int userID, int postNumber, int countryID, String street, String city)
+    public void updateProfile(int userID, int postNumber, int countryID, String street, String city, String firstName, String lastName)
     {
         try {
-            ps = con.prepareStatement("UPDATE users SET post_number = ?, country_id = ?, street = ?, city = ? WHERE id = ?");
+            ps = con.prepareStatement("UPDATE users SET post_number = ?, country_id = ?, street = ?, city = ?, first_name = ?, last_name = ? WHERE id = ?");
             ps.setInt(1, postNumber);
             ps.setInt(2, countryID);
             ps.setString(3, street);
             ps.setString(4, city);
-            ps.setInt(5, userID);
+            ps.setString(5, firstName);
+            ps.setString(6, lastName);
+            ps.setInt(7, userID);
             ps.execute();
             
         } catch(SQLException ex) {
@@ -259,6 +261,18 @@ public class Repository
             ps.setInt(1, productID);
             ps.setInt(2, userID);
             
+            ps.execute();
+        } catch (SQLException e) {
+            System.out.println(e.getLocalizedMessage());
+        }
+    }
+    
+    public void removeProductFromCart(int productID, int userID)
+    {
+        try {
+            ps = con.prepareStatement("DELETE FROM cart WHERE user_id = ? AND product_id = ?");
+            ps.setInt(1, userID);
+            ps.setInt(2, productID);
             ps.execute();
         } catch (SQLException e) {
             System.out.println(e.getLocalizedMessage());

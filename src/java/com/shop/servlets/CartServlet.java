@@ -24,6 +24,7 @@ public class CartServlet extends HttpServlet
         Repository repo = (Repository) getServletContext().getAttribute("repo");
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("user");
+        
         ArrayList<CartItem> cartItems = repo.getCartItems(u.getId());
         
         double totalPrice = 0;

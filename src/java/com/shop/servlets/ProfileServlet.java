@@ -29,6 +29,8 @@ public class ProfileServlet extends HttpServlet
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
+        String firstName = req.getParameter("fname");
+        String lastName = req.getParameter("lname");
         int countryID = Integer.parseInt(req.getParameter("country"));
         String city = req.getParameter("city");
         String street = req.getParameter("street");
@@ -38,7 +40,7 @@ public class ProfileServlet extends HttpServlet
         HttpSession session = req.getSession();
         User u = (User) session.getAttribute("user");
         
-        repo.updateProfile(u.getId(), postNumber, countryID, street, city);
+        repo.updateProfile(u.getId(), postNumber, countryID, street, city, firstName, lastName);
         resp.sendRedirect(req.getContextPath() + "/profile");
     }
     

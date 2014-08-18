@@ -314,15 +314,15 @@ CREATE TABLE IF NOT EXISTS `orders` (
   CONSTRAINT `FK_orders_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
--- Dumping data for table webshop.orders: ~1 rows (approximately)
+-- Dumping data for table webshop.orders: ~6 rows (approximately)
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
 INSERT INTO `orders` (`id`, `user_id`, `date`, `status`) VALUES
 	(7, 1, '2014-08-17 17:55:04', 'pending'),
-	(8, 1, '2014-08-17 18:31:06', 'pending'),
+	(8, 1, '2014-08-17 18:31:06', 'denied'),
 	(9, 1, '2014-08-18 13:52:18', 'pending'),
 	(10, 2, '2014-08-18 13:54:21', 'pending'),
-	(11, 3, '2014-08-18 14:04:19', 'pending'),
-	(12, 3, '2014-08-18 14:04:44', 'pending');
+	(11, 3, '2014-08-18 14:04:19', 'paid'),
+	(12, 3, '2014-08-18 14:04:44', 'paid');
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 
 
@@ -339,7 +339,7 @@ CREATE TABLE IF NOT EXISTS `orders_products` (
   CONSTRAINT `FK_orders_products_products` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
--- Dumping data for table webshop.orders_products: ~4 rows (approximately)
+-- Dumping data for table webshop.orders_products: ~17 rows (approximately)
 /*!40000 ALTER TABLE `orders_products` DISABLE KEYS */;
 INSERT INTO `orders_products` (`id`, `product_id`, `order_id`, `quantity`) VALUES
 	(1, 1, 7, 2),
@@ -376,7 +376,7 @@ CREATE TABLE IF NOT EXISTS `products` (
   CONSTRAINT `FK_Category` FOREIGN KEY (`category_id`) REFERENCES `products_categories` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
--- Dumping data for table webshop.products: ~11 rows (approximately)
+-- Dumping data for table webshop.products: ~13 rows (approximately)
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
 INSERT INTO `products` (`id`, `name`, `description`, `category_id`, `price`, `manufacturer`, `image`) VALUES
 	(1, 'DT770', '<h3>Sound you can rely on | Superior build quality | Every part is replaceable</h3>\r\n<p>\r\n    The DT 770 PRO is a closed dynamic headphone which has been designed for critical music and sound monitoring. The single-sided cable makes the handling of the headphone easy.\r\n</p>\r\n<ul>\r\n    <li>Closed diffuse-field studio headphone</li>\r\n    <li>"Bass reflex" technology for improved bass response</li>\r\n    <li>Comfortable fit due to rugged, adjustable, soft padded headband construction</li>\r\n    <li>Robust, easy serviceable construction as all parts are replaceable</li>\r\n    <li>Velour, circumaural and replaceable ear pads</li>\r\n    <li>3.0 m (9.8 ft.) coiled cable (single-sided)</li>\r\n    <li>Including drawstring bag</li>\r\n</ul>\r\n<h3>History of DT 770 PRO / DT 880 PRO / DT 990 PRO:</h3>\r\n<p>beyerdynamic’s DT 770 PRO, DT 880 PRO and DT 990 PRO headphone series has it’s roots in the early 1980s. Since then, millions of audio professionals from all parts of the world have become loyal users of beyerdynamic products.</p>\r\n<ul>\r\n    <li>DT 770 PRO, 32 ohms for mobile applications</li>\r\n    <li>DT 770 PRO, 80 ohms for recording applications within the studio</li>\r\n    <li>DT 770 PRO, 250 ohms for mixing applications in the studio</li>\r\n</ul>', 1, 159.99, 'Beyerdynamic', '1.jpg'),
@@ -403,7 +403,7 @@ CREATE TABLE IF NOT EXISTS `products_categories` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
--- Dumping data for table webshop.products_categories: ~4 rows (approximately)
+-- Dumping data for table webshop.products_categories: ~5 rows (approximately)
 /*!40000 ALTER TABLE `products_categories` DISABLE KEYS */;
 INSERT INTO `products_categories` (`id`, `name`, `description`) VALUES
 	(1, 'Headphones', 'Open headphones'),
@@ -434,12 +434,12 @@ CREATE TABLE IF NOT EXISTS `users` (
   CONSTRAINT `FK_users_countries` FOREIGN KEY (`country_id`) REFERENCES `countries` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Dumping data for table webshop.users: ~2 rows (approximately)
+-- Dumping data for table webshop.users: ~3 rows (approximately)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `username`, `email`, `password`, `group_id`, `country_id`, `city`, `post_number`, `street`, `first_name`, `last_name`) VALUES
 	(1, 'admin', 'admin@admin.com', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 54, 'Zagreb', 10000, 'Domobranska 19', 'Karlo', 'Mikuš'),
 	(2, 'user1', 'user1@user.com', 'd033e22ae348aeb5660fc2140aec35850c4da997', 2, 9, NULL, NULL, NULL, NULL, NULL),
-	(3, 'user2', 'user2@user.com', '89e495e7941cf9e40e6980d14a16bf023ccd4c91', 2, 4, NULL, NULL, NULL, NULL, NULL);
+	(3, 'user2', 'user2@user.com', '89e495e7941cf9e40e6980d14a16bf023ccd4c91', 2, 4, 'Karlovac', 32900, 'Ilica', 'Demo', 'TopKek');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
