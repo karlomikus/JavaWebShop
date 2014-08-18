@@ -38,7 +38,7 @@ public class CartServlet extends HttpServlet
         BigDecimal priceSummary = new BigDecimal(totalPrice);
         priceSummary = priceSummary.setScale(2, RoundingMode.UP);
         
-        session.setAttribute("cartCount", repo.countCartItems(u.getId()));        
+        session.setAttribute("cartCount", repo.countCartItems(u.getId()));
         request.setAttribute("cartItems", cartItems);
         request.setAttribute("totalPrice", priceSummary);
         request.setAttribute("totalQuantity", totalQuantity);

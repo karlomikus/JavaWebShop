@@ -39,6 +39,7 @@ public class LoginServlet extends HttpServlet
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
                 session.setMaxInactiveInterval(30*60);
+                session.setAttribute("cartCount", repo.countCartItems(user.getId()));
                 response.sendRedirect(request.getContextPath() + "/home");
             }
             else {
