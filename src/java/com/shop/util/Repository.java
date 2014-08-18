@@ -403,7 +403,7 @@ public class Repository
             {
                 Order o = new Order();
                 o.setId(rs.getInt("id"));
-                o.setDate(rs.getString("date"));
+                o.setDate(rs.getDate("date"));
                 o.setStatus(rs.getString("status"));
                 o.setProducts(getOrderProducts(rs.getInt("id")));
                 orders.add(o);

@@ -1,11 +1,12 @@
 package com.shop.beans;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Order
 {
     private int id;
-    private String date;
+    private Date date;
     private String status;
     private ArrayList<Product> products;
 
@@ -20,13 +21,13 @@ public class Order
     {
         this.id = id;
     }
-
-    public String getDate()
+    
+    public Date getDate()
     {
         return date;
     }
 
-    public void setDate(String date)
+    public void setDate(Date date)
     {
         this.date = date;
     }

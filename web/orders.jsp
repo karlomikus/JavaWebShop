@@ -18,8 +18,8 @@
                     <h4 class="panel-title">
                       <a data-toggle="collapse" data-parent="#accordion" href="#collapse${order.id}">
                         Order HR-${order.id}
-                      </a>
-                      <span class="pull-right">${order.date} [${order.status}]</span>
+                      </a> <small>[${order.status}]</small>
+                      <span class="pull-right"><fmt:formatDate value="${order.date}" type="date" pattern="dd.MM.yyyy" /></span>
                     </h4>
                   </div>
                   <div id="collapse${order.id}" class="panel-collapse collapse">
