@@ -25,25 +25,36 @@ public class CartServlet extends HttpServlet
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("user");
         
-        ArrayList<CartItem> cartItems = repo.getCartItems(u.getId());
-        
-        double totalPrice = 0;
-        int totalQuantity = 0;
-        
-        for(CartItem item : cartItems)
+        if(request.getParameterMap().containsKey("remove"))
         {
-            totalPrice += item.getProduct().getPrice().doubleValue() * item.getQuantity();
-            totalQuantity += item.getQuantity();
+            int productID = Integer.parseInt(request.getParameter("remove"));
+            repo.removeProductFromCart(productID, u.getId());
+            session.setAttribute("cartCount", repo.countCartItems(u.getId()));
+            response.sendRedirect(request.getContextPath() + "/cart");
+            //request.getRequestDispatcher("/cart.jsp").forward(request, response);
         }
-        
-        BigDecimal priceSummary = new BigDecimal(totalPrice);
-        priceSummary = priceSummary.setScale(2, RoundingMode.UP);
-        
-        session.setAttribute("cartCount", repo.countCartItems(u.getId()));
-        request.setAttribute("cartItems", cartItems);
-        request.setAttribute("totalPrice", priceSummary);
-        request.setAttribute("totalQuantity", totalQuantity);
-        request.getRequestDispatcher("/cart.jsp").forward(request, response);
+        else
+        {
+            ArrayList<CartItem> cartItems = repo.getCartItems(u.getId());
+
+            double totalPrice = 0;
+            int totalQuantity = 0;
+
+            for(CartItem item : cartItems)
+            {
+                totalPrice += item.getProduct().getPrice().doubleValue() * item.getQuantity();
+                totalQuantity += item.getQuantity();
+            }
+
+            BigDecimal priceSummary = new BigDecimal(totalPrice);
+            priceSummary = priceSummary.setScale(2, RoundingMode.UP);
+
+            request.setAttribute("cartItems", cartItems);
+            request.setAttribute("totalPrice", priceSummary);
+            request.setAttribute("totalQuantity", totalQuantity);
+            session.setAttribute("cartCount", repo.countCartItems(u.getId()));
+            request.getRequestDispatcher("/cart.jsp").forward(request, response);
+        }
     }
 
     @Override
