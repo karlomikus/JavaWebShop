@@ -24,9 +24,9 @@ CREATE TABLE IF NOT EXISTS `cart` (
   PRIMARY KEY (`id`),
   KEY `FK_cart_users` (`user_id`),
   CONSTRAINT `FK_cart_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
--- Dumping data for table webshop.cart: ~6 rows (approximately)
+-- Dumping data for table webshop.cart: ~0 rows (approximately)
 /*!40000 ALTER TABLE `cart` DISABLE KEYS */;
 /*!40000 ALTER TABLE `cart` ENABLE KEYS */;
 
@@ -312,13 +312,17 @@ CREATE TABLE IF NOT EXISTS `orders` (
   PRIMARY KEY (`id`),
   KEY `FK_orders_users` (`user_id`),
   CONSTRAINT `FK_orders_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table webshop.orders: ~1 rows (approximately)
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
 INSERT INTO `orders` (`id`, `user_id`, `date`, `status`) VALUES
 	(7, 1, '2014-08-17 17:55:04', 'pending'),
-	(8, 1, '2014-08-17 18:31:06', 'pending');
+	(8, 1, '2014-08-17 18:31:06', 'pending'),
+	(9, 1, '2014-08-18 13:52:18', 'pending'),
+	(10, 2, '2014-08-18 13:54:21', 'pending'),
+	(11, 3, '2014-08-18 14:04:19', 'pending'),
+	(12, 3, '2014-08-18 14:04:44', 'pending');
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 
 
@@ -333,16 +337,28 @@ CREATE TABLE IF NOT EXISTS `orders_products` (
   KEY `FK_orders_products_orders` (`order_id`),
   CONSTRAINT `FK_orders_products_orders` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
   CONSTRAINT `FK_orders_products_products` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
--- Dumping data for table webshop.orders_products: ~0 rows (approximately)
+-- Dumping data for table webshop.orders_products: ~4 rows (approximately)
 /*!40000 ALTER TABLE `orders_products` DISABLE KEYS */;
 INSERT INTO `orders_products` (`id`, `product_id`, `order_id`, `quantity`) VALUES
 	(1, 1, 7, 2),
 	(2, 2, 7, 3),
 	(3, 6, 7, 1),
 	(4, 9, 7, 1),
-	(5, 1, 8, 1);
+	(5, 1, 8, 1),
+	(6, 7, 9, 1),
+	(7, 8, 9, 1),
+	(8, 9, 9, 5),
+	(9, 10, 9, 1),
+	(10, 6, 10, 1),
+	(11, 11, 10, 1),
+	(12, 12, 10, 1),
+	(13, 1, 11, 1),
+	(14, 7, 11, 1),
+	(15, 4, 12, 2),
+	(16, 8, 12, 1),
+	(17, 10, 12, 1);
 /*!40000 ALTER TABLE `orders_products` ENABLE KEYS */;
 
 
@@ -416,13 +432,14 @@ CREATE TABLE IF NOT EXISTS `users` (
   KEY `FK_users_countries` (`country_id`),
   CONSTRAINT `FK_Groups` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`),
   CONSTRAINT `FK_users_countries` FOREIGN KEY (`country_id`) REFERENCES `countries` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table webshop.users: ~2 rows (approximately)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `username`, `email`, `password`, `group_id`, `country_id`, `city`, `post_number`, `street`, `first_name`, `last_name`) VALUES
 	(1, 'admin', 'admin@admin.com', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 54, 'Zagreb', 10000, 'Domobranska 19', 'Karlo', 'Mikuš'),
-	(2, 'user1', 'user1@user.com', 'd033e22ae348aeb5660fc2140aec35850c4da997', 2, NULL, NULL, NULL, NULL, NULL, NULL);
+	(2, 'user1', 'user1@user.com', 'd033e22ae348aeb5660fc2140aec35850c4da997', 2, 9, NULL, NULL, NULL, NULL, NULL),
+	(3, 'user2', 'user2@user.com', '89e495e7941cf9e40e6980d14a16bf023ccd4c91', 2, 4, NULL, NULL, NULL, NULL, NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;

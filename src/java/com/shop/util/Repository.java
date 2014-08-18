@@ -39,6 +39,8 @@ public class Repository
             ps.setString(2, generatePasswordHash(password));
             rs = ps.executeQuery();
             
+            System.out.println("Login passw: " + email);
+            
             if(rs !=null && rs.next()) {
                 u = new User();
                 u.setId(rs.getInt("id"));
@@ -62,7 +64,7 @@ public class Repository
     public void registerUser(String username, String email, String password, int groupID)
     {
         try {
-            ps = con.prepareStatement("INSERT INTO users (username, email, password, group_id) VALUES (?, ?, ?, ?)");
+            ps = con.prepareStatement("INSERT INTO users (username, email, password, group_id, country_id) VALUES (?, ?, ?, ?, 53)");
             ps.setString(1, username);
             ps.setString(2, email);
             ps.setString(3, generatePasswordHash(password));

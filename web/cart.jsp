@@ -35,6 +35,7 @@
                 </tfoot>
             </table>
             <div class="well">
+                <a href="${pageContext.request.contextPath}/products" class="btn btn-default"><i class="fa fa-angle-double-left fa-fw"></i> Continue shopping</a>
                 <a href="${pageContext.request.contextPath}/placeOrder" class="btn btn-success">Place order</a>
             </div>
         </div>
