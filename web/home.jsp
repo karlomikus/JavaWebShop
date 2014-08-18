@@ -16,9 +16,11 @@
             
             <div class="panel panel-primary">
                 <div class="panel-heading">New items:</div>
-                <div class="panel-body">
-                    Panel content
-                </div>
+                <ul class="list-group">
+                    <c:forEach items="${newProducts}" var="product">
+                    <li class="list-group-item"><a href="${pageContext.request.contextPath}/product?id=${product.id}">${product.manufacturer} - ${product.name}</a><span class="pull-right">$${product.price}</span></li>
+                    </c:forEach>
+                </ul>
             </div>
             
         </div>
@@ -26,9 +28,11 @@
             
             <div class="panel panel-primary">
                 <div class="panel-heading">Top sellers:</div>
-                <div class="panel-body">
-                    Panel content
-                </div>
+                <ul class="list-group">
+                    <c:forEach items="${topProducts}" var="product">
+                    <li class="list-group-item"><a href="${pageContext.request.contextPath}/product?id=${product.id}">${product.manufacturer} - ${product.name}</a><span class="pull-right">$${product.price}</span></li>
+                    </c:forEach>
+                </ul>
             </div>
             
         </div>

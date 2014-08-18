@@ -440,6 +440,53 @@ public class Repository
         return products;
     }
     
+    // Homepage ========================================================================================
+    public ArrayList<Product> getNewProducts()
+    {
+        ArrayList<Product> products = new ArrayList();
+
+        try {
+            ps = con.prepareStatement("SELECT * FROM products ORDER BY id DESC LIMIT 8");
+            rs = ps.executeQuery();
+            
+            while(rs.next())
+            {
+                Product p = new Product();
+                p.setId(rs.getInt("id"));
+                p.setName(rs.getString("name"));
+                p.setManufacturer(rs.getString("manufacturer"));
+                p.setPrice(rs.getBigDecimal("price"));
+                products.add(p);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getLocalizedMessage());
+        }
+        return products;
+    }
+    
+    public ArrayList<Product> getTopSellingProducts()
+    {
+        ArrayList<Product> products = new ArrayList();
+
+        try {
+            ps = con.prepareStatement("SELECT *, SUM(op.quantity) AS total_sales FROM orders_products AS op INNER JOIN products as p ON op.product_id = p.id GROUP BY op.product_id ORDER BY total_sales DESC LIMIT 8");
+            rs = ps.executeQuery();
+            
+            while(rs.next())
+            {
+                Product p = new Product();
+                p.setId(rs.getInt("id"));
+                p.setName(rs.getString("name"));
+                p.setManufacturer(rs.getString("manufacturer"));
+                p.setPrice(rs.getBigDecimal("price"));
+                products.add(p);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getLocalizedMessage());
+        }
+        return products;
+    }
+    
     // Util ========================================================================================
     private void openConnection()
     {
