@@ -475,7 +475,7 @@ public class Repository
             while(rs.next())
             {
                 Product p = new Product();
-                p.setId(rs.getInt("id"));
+                p.setId(rs.getInt("product_id"));
                 p.setName(rs.getString("name"));
                 p.setManufacturer(rs.getString("manufacturer"));
                 p.setPrice(rs.getBigDecimal("price"));
