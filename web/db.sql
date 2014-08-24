@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `cart` (
   PRIMARY KEY (`id`),
   KEY `FK_cart_users` (`user_id`),
   CONSTRAINT `FK_cart_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Dumping data for table webshop.cart: ~0 rows (approximately)
 /*!40000 ALTER TABLE `cart` DISABLE KEYS */;
@@ -337,7 +337,7 @@ CREATE TABLE IF NOT EXISTS `orders_products` (
   KEY `FK_orders_products_orders` (`order_id`),
   CONSTRAINT `FK_orders_products_orders` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
   CONSTRAINT `FK_orders_products_products` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table webshop.orders_products: ~17 rows (approximately)
 /*!40000 ALTER TABLE `orders_products` DISABLE KEYS */;
@@ -376,7 +376,7 @@ CREATE TABLE IF NOT EXISTS `products` (
   CONSTRAINT `FK_Category` FOREIGN KEY (`category_id`) REFERENCES `products_categories` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
--- Dumping data for table webshop.products: ~13 rows (approximately)
+-- Dumping data for table webshop.products: ~11 rows (approximately)
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
 INSERT INTO `products` (`id`, `name`, `description`, `category_id`, `price`, `manufacturer`, `image`) VALUES
 	(1, 'DT770', '<h3>Sound you can rely on | Superior build quality | Every part is replaceable</h3>\r\n<p>\r\n    The DT 770 PRO is a closed dynamic headphone which has been designed for critical music and sound monitoring. The single-sided cable makes the handling of the headphone easy.\r\n</p>\r\n<ul>\r\n    <li>Closed diffuse-field studio headphone</li>\r\n    <li>"Bass reflex" technology for improved bass response</li>\r\n    <li>Comfortable fit due to rugged, adjustable, soft padded headband construction</li>\r\n    <li>Robust, easy serviceable construction as all parts are replaceable</li>\r\n    <li>Velour, circumaural and replaceable ear pads</li>\r\n    <li>3.0 m (9.8 ft.) coiled cable (single-sided)</li>\r\n    <li>Including drawstring bag</li>\r\n</ul>\r\n<h3>History of DT 770 PRO / DT 880 PRO / DT 990 PRO:</h3>\r\n<p>beyerdynamic’s DT 770 PRO, DT 880 PRO and DT 990 PRO headphone series has it’s roots in the early 1980s. Since then, millions of audio professionals from all parts of the world have become loyal users of beyerdynamic products.</p>\r\n<ul>\r\n    <li>DT 770 PRO, 32 ohms for mobile applications</li>\r\n    <li>DT 770 PRO, 80 ohms for recording applications within the studio</li>\r\n    <li>DT 770 PRO, 250 ohms for mixing applications in the studio</li>\r\n</ul>', 1, 159.99, 'Beyerdynamic', '1.jpg'),
@@ -403,7 +403,7 @@ CREATE TABLE IF NOT EXISTS `products_categories` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
--- Dumping data for table webshop.products_categories: ~5 rows (approximately)
+-- Dumping data for table webshop.products_categories: ~4 rows (approximately)
 /*!40000 ALTER TABLE `products_categories` DISABLE KEYS */;
 INSERT INTO `products_categories` (`id`, `name`, `description`) VALUES
 	(1, 'Headphones', 'Open headphones'),
